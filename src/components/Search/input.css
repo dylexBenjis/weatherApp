@@ -1,0 +1,7 @@
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active{
+   transition: background-color !important;
+    
+}
