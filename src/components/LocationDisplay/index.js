@@ -5,6 +5,8 @@ import useSearch from '../Search'
 const LocWeatherDisplay = ({cityName,temp,description,hour,
                             minute, main}) => {
 
+                                const locationInfo = useSearch();
+
 
   return (
     <LocContainer>
@@ -12,7 +14,7 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
             <Celsius id='cel'>{temp}&#176;C</Celsius>
             <City>
                 <Name ></Name>
-                <Date>{hour}:{minute} &nbsp;  &nbsp;  {description} </Date>
+                <Date>{hour}:{minute} &nbsp;  &nbsp;  {description} {locationInfo.locationResult.city.country}</Date>
             </City>
             <WeatherIcon>
                 <Icon >'ICON'</Icon>
