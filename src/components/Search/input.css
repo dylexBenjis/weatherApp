@@ -1,7 +1,19 @@
-input:-webkit-autofill,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:active{
-   transition: background-color !important;
+input#locatioN,
+input#locatioN:-webkit-autofill,
+input#locatioN:-webkit-autofill:focus,
+input#locatioN:-webkit-autofill:hover,
+input#locatioN:-webkit-autofill:active{
+   transition: background-color 600000s 0s, font-size 600000s 0s, color 600000s 0s !important;
+   background-color: transparent !important;
     
 }
+
+input[data-autocompleted] {
+    background-color: transparent !important;
+}
+input:-internal-autofill-previewed {
+   background-color: transparent !important;
+ }
+ input:-internal-light-dark {
+   background-color: transparent !important;
+ }

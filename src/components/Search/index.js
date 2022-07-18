@@ -32,6 +32,7 @@ getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locati
 getData.onload =  function(){
 idd = JSON.parse(this.response);    
 setLocationR(idd);
+setLocation(idd.city.name);
 }  
 getData.send();
 }
@@ -76,7 +77,8 @@ const locatioName = locationName;
     render: (
     <SearchContainer>
         <A>
-            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='location' autoComplete='off'/> </SearchInput>
+            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='location' 
+            style={{backgroundColor:'transparent'}}/> </SearchInput>
             <Button onClick={getLocation}><FaSearch/></Button>
         </A>
         <B>

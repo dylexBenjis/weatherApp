@@ -14,7 +14,7 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
             <Celsius id='cel'>{temp}&#176;C</Celsius>
             <City>
                 <Name ></Name>
-                <Date>{hour}:{minute} &nbsp;  &nbsp;  {description} {locationInfo.locationResult.city.country}</Date>
+                <Date>{hour}:{minute} &nbsp;  &nbsp;  {description} {cityName}</Date>
             </City>
             <WeatherIcon>
                 <Icon >'ICON'</Icon>
