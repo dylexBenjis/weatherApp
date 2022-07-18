@@ -14,7 +14,6 @@ const useSearch = () => {
     
 
 const[locationName, setLocation] = useState();
-const ref = useRef()
 
 const appid = 'a9a4272a867a0349a402486758b281ed';
 
@@ -76,8 +75,7 @@ const locatioName = locationName;
     render: (
     <SearchContainer>
         <A>
-            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='location' 
-            style={{backgroundColor:'transparent'}}/> </SearchInput>
+            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='location'/> </SearchInput>
             <Button onClick={getLocation}><FaSearch/></Button>
         </A>
         <B>

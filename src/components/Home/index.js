@@ -22,7 +22,9 @@ const Home = () => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay/>
+                    <LocWeatherDisplay temp={locationInfo.locationResult.list[0].main.temp}
+                    cityName={locationInfo.locationResult.city.name} hour={hour} minute={minute} main={locationInfo.locationResult.list[0].weather[0].main}
+                    description={locationInfo.locationResult.list[0].weather[0].description}/>
                 </B>
             </Container>
         </First>
