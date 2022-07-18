@@ -32,7 +32,6 @@ getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locati
 getData.onload =  function(){
 idd = JSON.parse(this.response);    
 setLocationR(idd);
-setLocation(idd.city.name);
 }  
 getData.send();
 }
