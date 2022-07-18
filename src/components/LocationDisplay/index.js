@@ -5,7 +5,7 @@ import useSearch from '../Search'
 const LocWeatherDisplay = ({cityName,temp,description,hour,
                             minute, main}) => {
 
-                                const locationInfo = useSearch();
+                                // const locationInfo = useSearch();
 
 
   return (
