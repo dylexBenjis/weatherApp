@@ -9,10 +9,6 @@ import useSearch from '../Search';
 const Home = () => {
     //getting my useSearch returned object
     const locationInfo = useSearch();
-    //get time
-    const time = locationInfo.date;
-    const hour = time.getHours();
-    const minute = time.getMinutes();
 
   return (
     <HomeContainer>
@@ -22,9 +18,10 @@ const Home = () => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay temp={locationInfo.locationResult.list[0].main.temp}
-                    cityName={locationInfo.locationResult.city.name} hour={hour} minute={minute} main={locationInfo.locationResult.list[0].weather[0].main}
-                    description={locationInfo.locationResult.list[0].weather[0].description}/>
+                    <LocWeatherDisplay temp={locationInfo.locationResult.list[0].main.temp} date={locationInfo.dateResult.date}
+                    time={locationInfo.dateResult.time_12}
+                    cityName={locationInfo.locationResult.city.name}  main={locationInfo.locationResult.list[0].weather[0].main}
+                    description={locationInfo.locationResult.list[0].weather[0].description} dayTime={locationInfo.locationResult.list[0].sys.pod}/>
                 </B>
             </Container>
         </First>
@@ -35,7 +32,8 @@ const Home = () => {
                 </C>
                 <Hr/>
                 <D>
-                    <Details/>
+                    <Details clouds={locationInfo.locationResult.list[0].clouds.all} Windspeed={locationInfo.locationResult.list[0].wind.speed}
+                    humidity={locationInfo.locationResult.list[0].main.humidity} pressure={locationInfo.locationResult.list[0].main.pressure}/>
                 </D>
                 <Hr/>
             </ContainerBlur>

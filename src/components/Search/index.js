@@ -4,20 +4,26 @@ import styled from 'styled-components'
 import { Hr } from '../Home';
 import { locationInfo } from './locationInfo';
 import './input.css'
+import { dateInfo } from './DateInfo';
 
 //for saved locations
 const savedLocations= [];
 var idd;
+var iddate;
 
 const useSearch = () => {
 
     
 
 const[locationName, setLocation] = useState();
+const[lat, setLat] = useState(' ');
+const[lon, setLon] = useState(' ');
 
 const appid = 'a9a4272a867a0349a402486758b281ed';
 
 const [locationResult, setLocationR] = useState(locationInfo);
+const [dateResult, setDateR] = useState(dateInfo);
+
 
 
 //set locationName to user input
@@ -31,20 +37,33 @@ getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locati
 getData.onload =  function(){
 idd = JSON.parse(this.response);    
 setLocationR(idd);
+setLat(idd.city.coord.lat);
+setLon(idd.city.coord.lon);
 }  
 getData.send();
+
+
+
+
 }
 
 
-//get date
-const date = new Date();
-const day = date.getDate();
-const month = date.getMonth();
-const year = date.getFullYear();
-const date1 = year+'-'+month+'-'+day;
-console.log(date1)
+// date Api
+useEffect(()=>{
 
+    const getData = new XMLHttpRequest();
 
+getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&lat=${lat}&long=${lon}`, true);
+
+getData.onload =  function(){
+iddate = JSON.parse(this.response);    
+setDateR(iddate);
+}  
+getData.send();
+
+},[lat, lon])
+
+console.log(dateResult);
 console.log(locationResult);
 console.log(locationName);
 
@@ -68,8 +87,7 @@ const locatioName = locationName;
 
 
   return {
-    date,
-    date1,
+    dateResult,
     locatioName,
     locationResult,
     render: (
@@ -82,7 +100,7 @@ const locatioName = locationName;
             {/*array of saved locations */}
             {savedLocations.map((index)=>{
                 return (
-                    <CityNames key={index} onClick={()=>{ setLocation(index);     savedLoc();}}>
+                    <CityNames key={index} onClick={()=>{  getLocation(); setLocation(index);    savedLoc();}}>
                         {index}
                     </CityNames>
                 )

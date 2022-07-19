@@ -3,7 +3,10 @@ export const locationInfo =
     {
         city:{id:'--',
             name:'--',
-            coord:{},
+            coord:{
+                lat:'--',
+                lon:'--',
+            },
             country:'--',
             population:'--',
             //more lines  
@@ -15,11 +18,12 @@ export const locationInfo =
                 dt:'--',
                 dt_text:'--',
                 main:{
-                    temp:'--',
+                    temp:'00.00',
                     feels_like:'--',
                     temp_min:'--',
                     temp_max:'--',
                     pressure:'--',
+                    humidity:'--',
                 },
                 pop:'--',
                 rain:{

@@ -5,14 +5,14 @@ import useSearch from '../Search';
 
 
 
-const Details = () => {
+const Details = ({clouds, Windspeed,humidity, pressure}) => {
 
-//   const locationInfo = useSearch();
+console.log(clouds)
   
-// const info = [{id:1, title:'cloud',value: `${locationInfo.locationResult.list[0].clouds.all} %`},
-//               {id:2, title:'humidty',},
-//               {id:3, title:'wind speed', value: `${locationInfo.locationResult.list[0].wind.speed} m/s`},
-//               {id:4, title:'rain',  }]
+const info = [{id:1, title:'cloud',value: `${clouds}%`},
+              {id:2, title:'humidty', value:`${humidity}%`},
+              {id:3, title:'wind speed', value: `${Windspeed}m/s`},
+              {id:4, title:'pressure',  value:`${pressure}hPa`}]
 
   return (
     <DetailsCon>
@@ -20,14 +20,14 @@ const Details = () => {
             Weather deatails
         </Head>
         <div style={{gap:'10px'}}>    
-              {/* {info.map((q, index)=>{
+              {info.map((q, index)=>{
                 return (
                 <A key={index}>
                   <Title >{q.title}</Title>
                   <Value >{q.value}</Value>
                 </A>
                 )
-              })} */}
+              })}
 
         </div>
     </DetailsCon>
@@ -50,7 +50,7 @@ const Head = styled.div`
 const A = styled.div`
     display: grid ;
     padding: 20px 0px 10px 0px ;
-    grid-template-columns: 80% 20% ;
+    grid-template-columns: 70% 30% ;
     gap:10px ;
     justify-content:space-between ;
     width:100% ;
@@ -63,5 +63,5 @@ const Title =styled.div`
 const Value =styled.div`
     font-size: 20px ;
     color: gray ;
-    text-align: center ;
+    text-align: right ;
 `

@@ -1,9 +1,72 @@
 import React, { useState } from 'react'
+import { FaCloud, FaCloudMoon, FaCloudMoonRain, FaCloudSun, FaCloudSunRain, FaMoon, FaSnowflake, FaSun } from 'react-icons/fa'
+import {BsCloudFog2Fill, BsCloudLightning, BsClouds, BsFillCloudDrizzleFill} from 'react-icons/bs'
 import styled from 'styled-components'
 import useSearch from '../Search'
 
+const Icons=({main,description, dayTime})=>{
+
+    if (main === 'Clear'){
+        if (dayTime === 'd'){
+            return <FaSun/>
+        }
+        else{ return <FaMoon/>}
+    }
+    if (description=== 'few clouds'){
+        if (dayTime === 'd'){
+            return <FaCloudSun/>
+        }
+        else{ return <FaCloudMoon/>}
+    }
+    if (description=== 'few clouds'){
+        if (dayTime === 'd'){
+            return <FaCloudSun/>
+        }
+        else{ return <FaCloudMoon/>}
+    }
+    if (description=== 'scattered clouds'){
+        
+        return <FaCloud/>
+    }
+    if ( description=== 'broken clouds' || description === 'overcast clouds'){
+        
+        return <BsClouds/>
+    }
+    if (description=== 'mist' || description=== 'smoke' || description=== 'Haze' || description=== 'fog' || description=== 'sand/ dust whirls' || description=== 'sand' || description=== 'dust' || description=== 'volcanic ash' || description=== 'squalls' || description=== 'tornado'  ){
+        
+        return <BsCloudFog2Fill/>
+    }
+    if ( main === 'Snow'){
+        
+        return <FaSnowflake/>
+    }
+    if ( main === 'Thunderstorm'){
+        
+        return <BsCloudLightning/>
+    }
+    if ( main === 'Drizzle'){
+        
+        return <BsFillCloudDrizzleFill/>
+    }
+    if(main==='Rain'){
+        if (description === 'freezing rain'){
+            return <FaSnowflake/>
+        }
+        else {
+            if (dayTime==='d'){
+                return <FaCloudSunRain/>
+            }
+            else { return <FaCloudMoonRain/>}
+        }
+    }
+
+
+}
+
+
 const LocWeatherDisplay = ({cityName,temp,description,hour,
-                            minute, main}) => {
+                            minute, main, date, time, dayTime}) => {
+
 
 
   return (
@@ -11,12 +74,12 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
         <A>
             <Celsius id='cel'>{temp}&#176;C</Celsius>
             <City>
-                <Name ></Name>
-                <Date>{hour}:{minute} &nbsp;  &nbsp;  {description} {cityName}</Date>
+                <Name > {cityName}</Name>
+                <Date>{date} {time}  {main} </Date>
             </City>
             <WeatherIcon>
-                <Icon >'ICON'</Icon>
-                <Description>{main}</Description>
+                <Icon ><Icons main={main} description={description} dayTime={dayTime}/></Icon>
+                <Description>{description}</Description>
             </WeatherIcon>
         </A>
         <B>
@@ -39,41 +102,41 @@ const LocContainer = styled.div`
 `
 const A =styled.div`
     display:grid ;
-    grid-template-columns: auto auto auto ;
+    width: 100% ;
+    grid-template-columns: auto auto 15% ;
     justify-content: left ;
-    gap:30px ;
-
+    gap:25px ;
 `
 const Celsius =styled.div`
         display:flex ;
         height:100% ;
-        justify-self:center ;
+        justify-self:left ;
         font-size:100px ;
 `
 const City =styled.div`
     display: flex ;
     flex-direction:column ;
-    
-    justify-self:center ;
-    padding: 15px 0px 0px 0px;
+    justify-self:left ;
+    padding: 30px 0px 0px 0px;
     
 `
 const Name =styled.div`
-    font-size: 57px ;
+    font-size: 45px ;
 `
 const Date =styled.div`
-    font-size: 20px ;
+    font-size: 16px ;
 `
 const WeatherIcon =styled.div`
     display: flex ;
-    flex-direction:column ;
-    padding: 25px 0px 0px 0px;
+    flex-direction:column ; 
+    padding: 50px 0px 0px 0px;
 `
 const Icon= styled.div`
-    font-size :50px;
+    font-size :30px;
 `
 const Description = styled.div`
-    font-size: 20px ;
+    font-size: 14px ;
+    font-style: italic;
 `
 
 const B =styled.div`
