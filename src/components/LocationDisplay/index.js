@@ -73,6 +73,7 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
     <LocContainer>
         <A>
             <Celsius id='cel'>{temp}&#176;C</Celsius>
+            <div style={{display:'flex', flexDirection:'row',gap:'25px'}}>
             <City>
                 <Name > {cityName}</Name>
                 <Date>{date} {time}  {main} </Date>
@@ -81,10 +82,9 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
                 <Icon ><Icons main={main} description={description} dayTime={dayTime}/></Icon>
                 <Description>{description}</Description>
             </WeatherIcon>
+            </div>
         </A>
-        <B>
 
-        </B>
     </LocContainer>
   )
 }
@@ -92,58 +92,77 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
 export default LocWeatherDisplay
 
 const LocContainer = styled.div`
-    display:grid ;
-    grid-template-rows: 60% 40% ;
+    display:flex ;
     height:100% ;
-    width:100% ;    margin-top:22% ;
-    row-gap: 20px ;
+    align-items: flex-end ;
+    width:100% ;  
     padding: 10px 0px 10px 0px  ;
     color: white ;
+    @media screen and (max-width: 800px){
+        align-items: center ;
+    }
 `
 const A =styled.div`
     display:grid ;
     width: 100% ;
-    grid-template-columns: auto auto 15% ;
+    grid-template-columns: auto auto ;
     justify-content: left ;
     gap:25px ;
+    @media screen and (max-width: 800px){
+       grid-template-columns: auto ;
+       grid-template-rows: auto auto ;
+    }
 `
 const Celsius =styled.div`
         display:flex ;
         height:100% ;
         justify-self:left ;
         font-size:100px ;
+        @media screen and (max-width: 800px){
+        font-size: 45px ;
+    }
 `
 const City =styled.div`
     display: flex ;
     flex-direction:column ;
     justify-self:left ;
     padding: 30px 0px 0px 0px;
+    @media screen and (max-width: 800px){
+        padding: 0px ;
+    }
     
 `
 const Name =styled.div`
     font-size: 45px ;
+    @media screen and (max-width: 800px){
+        font-size: 30px ;
+    }
 `
 const Date =styled.div`
     font-size: 16px ;
+    @media screen and (max-width: 800px){
+        font-size: 14px ;
+    }
 `
 const WeatherIcon =styled.div`
     display: flex ;
     flex-direction:column ; 
     padding: 50px 0px 0px 0px;
+    @media screen and (max-width: 800px){
+        padding: 10px 0px 0px 0px ;
+    }
 `
 const Icon= styled.div`
     font-size :30px;
+    @media screen and (max-width: 800px){
+        font-size: 22px ;
+    }
 `
 const Description = styled.div`
     font-size: 14px ;
     font-style: italic;
+    @media screen and (max-width: 800px){
+        font-size: 12px ;
+    }
 `
 
-const B =styled.div`
-    align-items:center ;
-    background-color: green ;
-    display:grid ;
-    grid-template-rows: auto auto auto ;
-    justify-content: left ;
-    gap:10px ;
-`

@@ -93,7 +93,7 @@ const locatioName = locationName;
     render: (
     <SearchContainer>
         <A>
-            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='location'/> </SearchInput>
+            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='City'/> </SearchInput>
             <Button onClick={getLocation}><FaSearch/></Button>
         </A>
         <B>
@@ -125,6 +125,10 @@ const A = styled.div`
     justify-content:space-between ;
     width:100% ;
     height:15% ;
+    @media screen and (max-width: 800px){
+
+        height: 30% ;
+    }
 
 `
 const SearchInput = styled.div`
@@ -149,6 +153,7 @@ const Button = styled.div`
     align-items:center ;    background-color:gray ;
    justify-content: center;
    cursor:pointer ;
+   
 `
 const B = styled.div`
     display: flex ;
@@ -156,6 +161,9 @@ const B = styled.div`
     height:auto;
     align-items: baseline ;
     justify-content:left ;
+    @media screen and (max-width:800px){
+      display: none ;
+    }
 `
 const CityNames= styled.div`
     display:flex ;

@@ -42,10 +42,15 @@ const DetailsCon= styled.div`
     height: 100%;
     width: 100% ;
     cursor: default;
+    
+    
 `
 const Head = styled.div`
     font-size: 25px ;
     color: gray ;
+    @media screen and (max-width: 800px){
+        font-size: 18px ;
+    }
 `
 const A = styled.div`
     display: grid ;
@@ -55,13 +60,23 @@ const A = styled.div`
     justify-content:space-between ;
     width:100% ;
     height:auto ;
+    @media screen and (max-width: 800px){
+       padding: 10px 0px ;
+       gap: 2px ;
+    }
 `
 const Title =styled.div`
       font-size: 20px ;
     color: gray ;
+    @media screen and (max-width: 800px){
+        font-size: 15px ;
+    }
 `
 const Value =styled.div`
     font-size: 20px ;
     color: gray ;
     text-align: right ;
+    @media screen and (max-width: 800px){
+        font-size: 15px ;
+    }
 `
