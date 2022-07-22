@@ -3,12 +3,10 @@ import styled from 'styled-components'
 import Details from '../Details'
 import { Container, ContainerBlur } from '../GlobalLayout'
 import LocWeatherDisplay from '../LocationDisplay'
-import Nav from '../Nav'
-import useSearch from '../Search';
+import Nav from '../Nav';
 
-const Home = () => {
-    //getting my useSearch returned object
-    const locationInfo = useSearch();
+const Home = ({render, locationResult, dateResult}) => {
+
 
   return (
     <HomeContainer>
@@ -19,22 +17,22 @@ const Home = () => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay temp={locationInfo.locationResult.list[0].main.temp} date={locationInfo.dateResult.date}
-                    time={locationInfo.dateResult.time_12}
-                    cityName={locationInfo.locationResult.city.name}  main={locationInfo.locationResult.list[0].weather[0].main}
-                    description={locationInfo.locationResult.list[0].weather[0].description} dayTime={locationInfo.locationResult.list[0].sys.pod}/>
+                    <LocWeatherDisplay temp={locationResult.list[0].main.temp} date={dateResult.date}
+                    time={dateResult.time_12}
+                    cityName={locationResult.city.name}  main={locationResult.list[0].weather[0].main}
+                    description={locationResult.list[0].weather[0].description} dayTime={locationResult.list[0].sys.pod}/>
                 </B>
             </Container>
         </First>
         <Second>
             <ContainerBlur>
                 <C>
-                    {locationInfo.render}
+                    {render}
                 </C>
                 <Hr/>
                 <D>
-                    <Details clouds={locationInfo.locationResult.list[0].clouds.all} Windspeed={locationInfo.locationResult.list[0].wind.speed}
-                    humidity={locationInfo.locationResult.list[0].main.humidity} pressure={locationInfo.locationResult.list[0].main.pressure}/>
+                    <Details clouds={locationResult.list[0].clouds.all} Windspeed={locationResult.list[0].wind.speed}
+                    humidity={locationResult.list[0].main.humidity} pressure={locationResult.list[0].main.pressure}/>
                 </D>
                 <Hr/>
             </ContainerBlur>
@@ -47,24 +45,24 @@ const Home = () => {
                     <Nav/>
                 </A>
                 <B>
-                    {locationInfo.render}
+                    {render}
                 </B>
             </Container>
         </First>
         <Second>
             <Container>
                 <C>
-                <LocWeatherDisplay temp={locationInfo.locationResult.list[0].main.temp} date={locationInfo.dateResult.date}
-                    time={locationInfo.dateResult.time_12}
-                    cityName={locationInfo.locationResult.city.name}  main={locationInfo.locationResult.list[0].weather[0].main}
-                    description={locationInfo.locationResult.list[0].weather[0].description} dayTime={locationInfo.locationResult.list[0].sys.pod}/>
+                <LocWeatherDisplay temp={locationResult.list[0].main.temp} date={dateResult.date}
+                    time={dateResult.time_12}
+                    cityName={locationResult.city.name}  main={locationResult.list[0].weather[0].main}
+                    description={locationResult.list[0].weather[0].description} dayTime={locationResult.list[0].sys.pod}/>
                 </C>
             </Container>
-        <div style={{backgroundColor:'rgba(0,0,0,0.7)'}}>
+        <div style={{backgroundColor:'rgba(0,0,0,0.5)'}}>
             <Container>
                 <D>
-                    <Details clouds={locationInfo.locationResult.list[0].clouds.all} Windspeed={locationInfo.locationResult.list[0].wind.speed}
-                    humidity={locationInfo.locationResult.list[0].main.humidity} pressure={locationInfo.locationResult.list[0].main.pressure}/>
+                    <Details clouds={locationResult.list[0].clouds.all} Windspeed={locationResult.list[0].wind.speed}
+                    humidity={locationResult.list[0].main.humidity} pressure={locationResult.list[0].main.pressure}/>
                 </D>
             </Container>
         </div>

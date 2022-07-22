@@ -6,6 +6,10 @@ import useSearch from '../Search'
 
 const Icons=({main,description, dayTime})=>{
 
+    if(main === '--'){
+        return '--'
+    }
+
     if (main === 'Clear'){
         if (dayTime === 'd'){
             return <FaSun/>

@@ -11,11 +11,12 @@ const savedLocations= [];
 var idd;
 var iddate;
 
+
 const useSearch = () => {
 
     
 
-const[locationName, setLocation] = useState();
+const[locationName, setLocationName] = useState();
 const[lat, setLat] = useState(' ');
 const[lon, setLon] = useState(' ');
 
@@ -24,27 +25,42 @@ const appid = 'a9a4272a867a0349a402486758b281ed';
 const [locationResult, setLocationR] = useState(locationInfo);
 const [dateResult, setDateR] = useState(dateInfo);
 
+const [countryCode, setCountryCode] = useState('');
+
 
 
 //set locationName to user input
 const getLocation = () => {
-savedLoc();
-//get json file
-const getData = new XMLHttpRequest();
-
-getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locationName}&appid=${appid}&units=metric`, true);
-
-getData.onload =  function(){
-idd = JSON.parse(this.response);    
-setLocationR(idd);
-setLat(idd.city.coord.lat);
-setLon(idd.city.coord.lon);
-}  
-getData.send();
+    savedLoc();
 
 
+    //get json file
+    if(countryCode === ''){
+        const getData = new XMLHttpRequest();
 
+        getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locationName}&appid=${appid}&units=metric`, true);
 
+        getData.onload =  function(){
+        idd = JSON.parse(this.response);    
+        setLocationR(idd);
+        setLat(idd.city.coord.lat);
+        setLon(idd.city.coord.lon);
+        }  
+        getData.send();
+    }
+    else{
+        const getData = new XMLHttpRequest();
+
+        getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locationName},${countryCode}&appid=${appid}&units=metric`, true);
+    
+        getData.onload =  function(){
+        idd = JSON.parse(this.response);    
+        setLocationR(idd);
+        setLat(idd.city.coord.lat);
+        setLon(idd.city.coord.lon);
+        }  
+        getData.send();
+    }
 }
 
 
@@ -63,7 +79,7 @@ getData.send();
 
 },[lat, lon])
 
-console.log(dateResult);
+console.log(countryCode);
 console.log(locationResult);
 console.log(locationName);
 
@@ -71,36 +87,33 @@ console.log(locationName);
 const savedLoc=()=>{
     if (savedLocations.includes(locationName)){
         delete savedLocations[savedLocations.indexOf(locationName)];
-        savedLocations.unshift(locatioName);
+        savedLocations.unshift(locationName);
     }
     else{
-        savedLocations.unshift(locatioName);
+        savedLocations.unshift(locationName);
     }
-  savedLocations.length = 5;
+  savedLocations.length = 4;
 }
 
 console.log(savedLocations)
 
-//for returning state variable locationName. Only way the state could return.
-const locatioName = locationName;
-
-
-
   return {
     dateResult,
-    locatioName,
     locationResult,
     render: (
     <SearchContainer>
         <A>
-            <SearchInput ><Input value={locationName} onChange={e=>{setLocation(e.target.value)}} id='locatioN' type='text' placeholder='City'/> </SearchInput>
+            <SearchInput >
+                <Input onChange={e=>setLocationName(e.target.value)}  id='locatioN' type='text' placeholder='City'/> 
+                <Input onChange={e=>setCountryCode(e.target.value)}  id='countrycode' type='number' placeholder='Country code'/> 
+                </SearchInput>
             <Button onClick={getLocation}><FaSearch/></Button>
         </A>
         <B>
             {/*array of saved locations */}
             {savedLocations.map((index)=>{
                 return (
-                    <CityNames key={index} onClick={()=>{  getLocation(); setLocation(index);    savedLoc();}}>
+                    <CityNames key={index} onClick={()=>{  getLocation(); setLocationName(index);    savedLoc();}}>
                         {index}
                     </CityNames>
                 )
@@ -134,16 +147,19 @@ const A = styled.div`
 const SearchInput = styled.div`
 `
 const Input = styled.input`
-    width:100% ;
+    width:50% ;
     height:100% ;
     background-color:transparent ;
-    padding: 0px 0px 0px 10px ;
+    padding: 0px 5px 0px 10px ;
     font-size: 20px ;
     color: #fff ;
     border-top: 0 ;
     border-left:0 ;
     outline: none ;
     fill: background-color ;
+    @media screen and (max-width: 800px){
+        font-size:16px ;
+}
     
 `
 const Button = styled.div`
