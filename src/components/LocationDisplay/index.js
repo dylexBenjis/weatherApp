@@ -1,76 +1,22 @@
 import React, { useState } from 'react'
-import { FaCloud, FaCloudMoon, FaCloudMoonRain, FaCloudSun, FaCloudSunRain, FaMoon, FaSnowflake, FaSun } from 'react-icons/fa'
-import {BsCloudFog2Fill, BsCloudLightning, BsClouds, BsFillCloudDrizzleFill} from 'react-icons/bs'
+
 import styled from 'styled-components'
 import useSearch from '../Search'
-
-const Icons=({main,description, dayTime})=>{
-
-    if(main === '--'){
-        return '--'
-    }
-
-    if (main === 'Clear'){
-        if (dayTime === 'd'){
-            return <FaSun/>
-        }
-        else{ return <FaMoon/>}
-    }
-    if (description=== 'few clouds'){
-        if (dayTime === 'd'){
-            return <FaCloudSun/>
-        }
-        else{ return <FaCloudMoon/>}
-    }
-    if (description=== 'few clouds'){
-        if (dayTime === 'd'){
-            return <FaCloudSun/>
-        }
-        else{ return <FaCloudMoon/>}
-    }
-    if (description=== 'scattered clouds'){
-        
-        return <FaCloud/>
-    }
-    if ( description=== 'broken clouds' || description === 'overcast clouds'){
-        
-        return <BsClouds/>
-    }
-    if (description=== 'mist' || description=== 'smoke' || description=== 'Haze' || description=== 'fog' || description=== 'sand/ dust whirls' || description=== 'sand' || description=== 'dust' || description=== 'volcanic ash' || description=== 'squalls' || description=== 'tornado'  ){
-        
-        return <BsCloudFog2Fill/>
-    }
-    if ( main === 'Snow'){
-        
-        return <FaSnowflake/>
-    }
-    if ( main === 'Thunderstorm'){
-        
-        return <BsCloudLightning/>
-    }
-    if ( main === 'Drizzle'){
-        
-        return <BsFillCloudDrizzleFill/>
-    }
-    if(main==='Rain'){
-        if (description === 'freezing rain'){
-            return <FaSnowflake/>
-        }
-        else {
-            if (dayTime==='d'){
-                return <FaCloudSunRain/>
-            }
-            else { return <FaCloudMoonRain/>}
-        }
-    }
+import dayjs from 'dayjs'
+import ForecastSlider from '../forecastSlider'
+import Icons from './icons'
+import { FaArrowLeft } from 'react-icons/fa'
 
 
-}
+
 
 
 const LocWeatherDisplay = ({cityName,temp,description,hour,
-                            minute, main, date, time, dayTime}) => {
+                            minute, main, date, time, dayTime, locationResult, dateResult, icon}) => {
 
+//for the day
+            const day = dayjs('2022-08-01').format('dd')
+console.log(day)
 
 
   return (
@@ -80,14 +26,18 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
             <div style={{display:'flex', flexDirection:'row',gap:'25px'}}>
             <City>
                 <Name > {cityName}</Name>
-                <Date>{date} {time}  {main} </Date>
+                <Date>{dayjs(locationResult.values[0].datetime).format('DD/MM/YY ddd h:mm A')} </Date>
             </City>
             <WeatherIcon>
-                <Icon ><Icons main={main} description={description} dayTime={dayTime}/></Icon>
+                <Icon ><Icons main={main} description={description} dayTime={dayTime} locationResult={locationResult} icon={icon}/></Icon>
                 <Description>{description}</Description>
             </WeatherIcon>
             </div>
         </A>
+        <B>
+            <ForecastSlider locationResult={locationResult} dateResult={dateResult} cityName={cityName}temp={temp} description={description} hour = {hour} 
+            minute={minute} date={date} time={time} dayTime={dayTime} />
+        </B>
 
     </LocContainer>
   )
@@ -96,32 +46,32 @@ const LocWeatherDisplay = ({cityName,temp,description,hour,
 export default LocWeatherDisplay
 
 const LocContainer = styled.div`
-    display:flex ;
-    height:100% ;
-    align-items: flex-end ;
-    width:100% ;  
-    padding: 10px 0px 10px 0px  ;
+    display:grid;
+    height:100% ; 
+    grid-template-rows: 50% 50% ;
+    row-gap:30px ;
+    justify-content:left ;
+    width:100% ; 
     color: white ;
-    @media screen and (max-width: 800px){
-        align-items: center ;
+    @media screen and (max-width:800px){
+        row-gap:15px ;
     }
+
 `
 const A =styled.div`
     display:grid ;
     width: 100% ;
-    grid-template-columns: auto auto ;
+    height:100% ;
+    grid-template-columns: auto ; 
+    grid-template-rows: auto auto ;
     justify-content: left ;
-    gap:25px ;
-    @media screen and (max-width: 800px){
-       grid-template-columns: auto ;
-       grid-template-rows: auto auto ;
-    }
+    align-self:flex-start ;
 `
 const Celsius =styled.div`
         display:flex ;
         height:100% ;
         justify-self:left ;
-        font-size:100px ;
+        font-size:70px ;
         @media screen and (max-width: 800px){
         font-size: 45px ;
     }
@@ -130,16 +80,13 @@ const City =styled.div`
     display: flex ;
     flex-direction:column ;
     justify-self:left ;
-    padding: 30px 0px 0px 0px;
-    @media screen and (max-width: 800px){
-        padding: 0px ;
-    }
+
     
 `
 const Name =styled.div`
-    font-size: 45px ;
+    font-size: 30px ;
     @media screen and (max-width: 800px){
-        font-size: 30px ;
+        font-size: 22px ;
     }
 `
 const Date =styled.div`
@@ -149,12 +96,9 @@ const Date =styled.div`
     }
 `
 const WeatherIcon =styled.div`
-    display: flex ;
+    display: flex ; 
     flex-direction:column ; 
-    padding: 50px 0px 0px 0px;
-    @media screen and (max-width: 800px){
-        padding: 10px 0px 0px 0px ;
-    }
+
 `
 const Icon= styled.div`
     font-size :30px;
@@ -163,10 +107,56 @@ const Icon= styled.div`
     }
 `
 const Description = styled.div`
-    font-size: 14px ;
+    font-size: 16px ;
     font-style: italic;
     @media screen and (max-width: 800px){
-        font-size: 12px ;
+        font-size: 14px ;
     }
 `
 
+const B = styled.div`
+    display: flex;
+    justify-self:left ;
+    align-self: flex-end;
+    flex-wrap:nowrap ;
+    width: calc(100vw/1.1409) ;
+    height:100% ;
+    overflow-x:scroll ;  
+    @media screen and (min-width:800px){
+        width: calc(100vw/1.7) ;
+        &::-webkit-scrollbar{
+            /* display:none ; */
+            height: 17px ;
+        }
+        ::-webkit-scrollbar-track{
+            background-color:transparent ;
+            background-clip:content-box ;
+
+        }
+        &::-webkit-scrollbar-thumb{
+            background-color:gray ;
+            background-clip:content-box ;
+            border-top: 7px solid transparent ;
+            border-bottom: 7px solid transparent ;
+        }
+        &::-webkit-scrollbar-button:horizontal:increment{
+            background-color:gray ;
+            border-top-right-radius:15px ;
+            border-bottom-right-radius:15px ;
+            display:flex;
+            border-left:2px solid gray ;
+            height:20px ;
+            width:20px ;
+        }
+        &::-webkit-scrollbar-button:horizontal:decrement{
+            background-color: gray;
+            border-top-left-radius:15px ;
+            border-bottom-left-radius:15px ;
+            display:flex;
+            border-right:2px solid gray ;
+            height:120px ;
+            width:20px ;
+        }
+    }
+
+`

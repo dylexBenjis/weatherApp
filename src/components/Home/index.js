@@ -17,10 +17,10 @@ const Home = ({render, locationResult, dateResult}) => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay temp={locationResult.list[0].main.temp} date={dateResult.date}
-                    time={dateResult.time_12}
-                    cityName={locationResult.city.name}  main={locationResult.list[0].weather[0].main}
-                    description={locationResult.list[0].weather[0].description} dayTime={locationResult.list[0].sys.pod}/>
+                    <LocWeatherDisplay temp={locationResult.values[0].temp} date={dateResult.date}
+                    time={dateResult.time_12} locationResult={locationResult} dateResult={dateResult}
+                    cityName={locationResult.address}   icon={locationResult.values[0].icon}
+                    description={locationResult.values[0].conditions}/>
                 </B>
             </Container>
         </First>
@@ -31,8 +31,8 @@ const Home = ({render, locationResult, dateResult}) => {
                 </C>
                 <Hr/>
                 <D>
-                    <Details clouds={locationResult.list[0].clouds.all} Windspeed={locationResult.list[0].wind.speed}
-                    humidity={locationResult.list[0].main.humidity} pressure={locationResult.list[0].main.pressure}/>
+                    <Details clouds={locationResult.values[0].cloudcover} windspeed={locationResult.values[0].wspd} wdir={locationResult.values[0].wdir}
+                    humidity={locationResult.values[0].humidity} pressure={locationResult.values[0].sealevelpressure}/>
                 </D>
                 <Hr/>
             </ContainerBlur>
@@ -52,17 +52,17 @@ const Home = ({render, locationResult, dateResult}) => {
         <Second>
             <Container>
                 <C>
-                <LocWeatherDisplay temp={locationResult.list[0].main.temp} date={dateResult.date}
-                    time={dateResult.time_12}
-                    cityName={locationResult.city.name}  main={locationResult.list[0].weather[0].main}
-                    description={locationResult.list[0].weather[0].description} dayTime={locationResult.list[0].sys.pod}/>
+                    <LocWeatherDisplay locationResult={locationResult} temp={locationResult.values[0].temp} date={dateResult.date}
+                        time={dateResult.time_12} dateResult={dateResult}
+                        cityName={locationResult.address}   icon={locationResult.values[0].icon}
+                        description={locationResult.values[0].conditions}/>
                 </C>
             </Container>
         <div style={{backgroundColor:'rgba(0,0,0,0.5)'}}>
             <Container>
                 <D>
-                    <Details clouds={locationResult.list[0].clouds.all} Windspeed={locationResult.list[0].wind.speed}
-                    humidity={locationResult.list[0].main.humidity} pressure={locationResult.list[0].main.pressure}/>
+                    <Details clouds={locationResult.values[0].cloudcover} windspeed={locationResult.values[0].wspd} wdir={locationResult.values[0].wdir}
+                        humidity={locationResult.values[0].humidity}   pressure={locationResult.values[0].sealevelpressure}/>
                 </D>
             </Container>
         </div>
@@ -86,7 +86,7 @@ const LargeScreen=styled.div`
     flex-direction: row ;
     width:100% ;
     height:100% ;
-    @media screen and (max-width: 800px){
+    @media screen and (max-width: 920px){
         display: none ;
     }
 `
@@ -95,7 +95,7 @@ const SmallScreen=styled.div`
     flex-direction: column;
     width:100% ;
     height:100% ;
-    @media screen and (max-width: 800px){
+    @media screen and (max-width: 920px){
         display: flex ;
     }
 `
@@ -103,11 +103,11 @@ const SmallScreen=styled.div`
 const First =styled.div`
     display: grid;
     grid-template-columns: repeat(1,1fr) ;
-    grid-template-rows: repeat(2,1fr) ;
+    grid-template-rows: 50% 50%  ;
     width: 65% ;
     height:100vh ;
-    @media screen and (max-width: 800px){
-        height: 35% ;
+    @media screen and (max-width: 920px){
+        height: 25% ;
         width:100vw ;
     }
 `
@@ -118,8 +118,8 @@ const Second =styled.div`
     width: 35% ;
     height:100vh ;
 background-color: rgba(0,0,0,0.7) ;
-@media screen and (max-width: 800px){
-        height: 65% ;
+@media screen and (max-width: 920px){
+        height: 75% ;
         width:100vw ;
         background-color: transparent ;
     }
@@ -132,13 +132,14 @@ const A =styled.div`
 `
 const B =styled.div`
     height:100% ;
+    width:100% ;
 `
 const C =styled.div`
-    padding: 10px 30px 10px 30px ;
+    padding: 5px 30px 5px 30px ;
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 0px 0px 0px 0px;
-       height:calc(38vh*0.65) ;
+       height:calc(50vh*0.75) ;
     }
 `
 const D =styled.div`
@@ -146,7 +147,7 @@ const D =styled.div`
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 5px 0px 0px 0px;
-       height:calc(45vh*0.65) ;
+       height:calc(35vh*0.75) ;
     }
 `
 export const Hr =styled.div`

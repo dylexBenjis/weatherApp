@@ -6,21 +6,38 @@ import day from '../src/media/day.jpg'
 import night from '../src/media/night.jpg'
 import styled from 'styled-components';
 import useSearch from './components/Search';
+import dayjs from 'dayjs';
 
 function App() {
   //getting my useSearch returned object
   const locationInfo = useSearch();
-
+  console.log(locationInfo.locationResult.location.address);
 
   const WeatherBackground = () =>{
-    if (locationInfo.locationResult.list[0].weather[0].main === 'Rain'){
+    if (locationInfo.locationResult.location.values[0].icon === 'rain'||
+    locationInfo.locationResult.location.values[0].icon === 'showers-day'||
+    locationInfo.locationResult.location.values[0].icon === 'showers-night'){
         return rain
     }
-    else if (locationInfo.locationResult.list[0].weather[0].main === 'Thunderstorm'){
+    else if (locationInfo.locationResult.location.values[0].icon === 'thunder-rain'){
       return thunder
     }
     else{
-      if (locationInfo.locationResult.list[0].sys.pod === 'd'){
+      if (locationInfo.locationResult.location.values[0].icon === 'partly-cloudy-day'||
+            locationInfo.locationResult.location.values[0].icon === 'clear-day'||
+            ((
+                (((dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h') >= '1')&&(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')<='6'))
+                ||(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')==='12'))
+                &&(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('A')==='PM')
+              )
+              ||(
+                  (dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('A')==='AM')&&((dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')>='6')&&
+                  (dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')<='11'))
+                )
+              )
+            )
+          
+      {
         return day
       }
       else{
@@ -36,7 +53,7 @@ function App() {
       <BackgroundImage>
         <Img src={WeatherBackground()}></Img>
       </BackgroundImage>
-      <Home locationResult={locationInfo.locationResult} dateResult={locationInfo.dateResult} render={locationInfo.render}/>
+      <Home locationResult={locationInfo.locationResult.location} dateResult={locationInfo.dateResult} render={locationInfo.render}/>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaSearch} from 'react-icons/fa'
 import styled from 'styled-components'
 import { Hr } from '../Home';
-import { locationInfo } from './locationInfo';
+import { convert } from './locationInfo';
 import './input.css'
 import { dateInfo } from './DateInfo';
 
@@ -10,7 +10,6 @@ import { dateInfo } from './DateInfo';
 const savedLocations= [];
 var idd;
 var iddate;
-
 
 const useSearch = () => {
 
@@ -20,9 +19,9 @@ const[locationName, setLocationName] = useState();
 const[lat, setLat] = useState(' ');
 const[lon, setLon] = useState(' ');
 
-const appid = 'a9a4272a867a0349a402486758b281ed';
+const appid = 'YL3DPR3G8LL234DHWYMQP3223';//'a9a4272a867a0349a402486758b281ed';
 
-const [locationResult, setLocationR] = useState(locationInfo);
+const [locationResult, setLocationR] = useState(convert);
 const [dateResult, setDateR] = useState(dateInfo);
 
 const [countryCode, setCountryCode] = useState('');
@@ -38,20 +37,19 @@ const getLocation = () => {
     if(countryCode === ''){
         const getData = new XMLHttpRequest();
 
-        getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locationName}&appid=${appid}&units=metric`, true);
-
+        getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName}&lang=en&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true)
         getData.onload =  function(){
         idd = JSON.parse(this.response);    
         setLocationR(idd);
-        setLat(idd.city.coord.lat);
-        setLon(idd.city.coord.lon);
+        setLat(idd.location.latitude);
+        setLon(idd.location.longitude);
         }  
         getData.send();
     }
     else{
         const getData = new XMLHttpRequest();
 
-        getData.open('GET', `https://api.openweathermap.org/data/2.5/forecast?q=${locationName},${countryCode}&appid=${appid}&units=metric`, true);
+        getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName},${countryCode}&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true);
     
         getData.onload =  function(){
         idd = JSON.parse(this.response);    
@@ -69,13 +67,13 @@ useEffect(()=>{
 
     const getData = new XMLHttpRequest();
 
-getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&lat=${lat}&long=${lon}`, true);
+    getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&lat=${lat}&long=${lon}`, true);
 
-getData.onload =  function(){
-iddate = JSON.parse(this.response);    
-setDateR(iddate);
-}  
-getData.send();
+    getData.onload =  function(){
+    iddate = JSON.parse(this.response);    
+    setDateR(iddate);
+    }  
+    getData.send();
 
 },[lat, lon])
 
@@ -92,22 +90,28 @@ const savedLoc=()=>{
     else{
         savedLocations.unshift(locationName);
     }
-  savedLocations.length = 4;
+  savedLocations.length = 5;
 }
 
 console.log(savedLocations)
 
   return {
     dateResult,
+    locationName,
     locationResult,
     render: (
     <SearchContainer>
         <A>
-            <SearchInput >
-                <Input onChange={e=>setLocationName(e.target.value)}  id='locatioN' type='text' placeholder='City'/> 
-                <Input onChange={e=>setCountryCode(e.target.value)}  id='countrycode' type='number' placeholder='Country code'/> 
+            <First>
+                <SearchInput >
+                    <Input onChange={e=>setLocationName(e.target.value)}  id='locatioN' type='text' placeholder='City'/> 
+                    <Input  onChange={e=>setCountryCode(e.target.value)}  id='countrycode' type='text' placeholder='Country'/> 
                 </SearchInput>
-            <Button onClick={getLocation}><FaSearch/></Button>
+                <Button onClick={getLocation}><FaSearch/></Button>
+            </First>
+            <Note>
+            <span style={{color:'red'}}>note: </span>input country for accurate information.
+            </Note>
         </A>
         <B>
             {/*array of saved locations */}
@@ -134,17 +138,24 @@ const SearchContainer =styled.div`
 `
 const A = styled.div`
     display: grid ;
-    grid-template-columns: 85% 15% ;
-    justify-content:space-between ;
+    grid-template-columns: repeat(1,1fr) ;
+    grid-template-rows: 50% 50% ;
+    gap: 10px ;
     width:100% ;
-    height:15% ;
+    height:25% ;
     @media screen and (max-width: 800px){
 
         height: 30% ;
     }
 
 `
+const First = styled.div`
+    display: grid ;
+    grid-template-columns: 85% 15% ;
+
+`
 const SearchInput = styled.div`
+    display:flex;
 `
 const Input = styled.input`
     width:50% ;
@@ -171,6 +182,11 @@ const Button = styled.div`
    cursor:pointer ;
    
 `
+const Note = styled.div`
+    color: gray ;
+    font-size: 12px ;
+
+`
 const B = styled.div`
     display: flex ;
     flex-direction:column ;
@@ -185,7 +201,7 @@ const CityNames= styled.div`
     display:flex ;
     width:100% ;
     height:100% ;
-    margin: 15px 0px 15px 10px ;
+    margin: 5px 0px 5px 10px ;
     align-items: center ;
     justify-content:left ;
     font-size: 20px ;
