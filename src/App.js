@@ -26,13 +26,13 @@ function App() {
       if (locationInfo.locationResult.location.values[0].icon === 'partly-cloudy-day'||
             locationInfo.locationResult.location.values[0].icon === 'clear-day'||
             ((
-                (((dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h') >= '1')&&(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')<='6'))
-                ||(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')==='12'))
-                &&(dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('A')==='PM')
+                (((dayjs(locationInfo.locationResult.location.values[0].datetime).format('h') >= '1')&&(dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')<='6'))
+                ||(dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')==='12'))
+                &&(dayjs(locationInfo.locationResult.location.values[0].datetime).format('A')==='PM')
               )
               ||(
-                  (dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('A')==='AM')&&((dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')>='6')&&
-                  (dayjs(locationInfo.locationResult.location.values[0].datetimeStr).format('h')<='11'))
+                  (dayjs(locationInfo.locationResult.location.values[0].datetime).format('A')==='AM')&&((dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')>='6')&&
+                  (dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')<='11'))
                 )
               )
             )
