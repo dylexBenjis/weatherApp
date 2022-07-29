@@ -47,27 +47,33 @@ const Wrapper= styled.div`
 `
 const ForecastCon = styled.div`
     display: grid;
-    grid-template-columns: 60px ;
+    grid-template-columns: 80px ;
     grid-template-rows: repeat(3,1fr) ;
+    @media screen and (max-width:920px){
+      grid-template-columns:60px ;
+    }
 `
 const A = styled.div`
-  display:grid ;
-  grid-template-rows: repeat(2,1fr) ;
-    font-size: 10px;
+  display:flex ;
+  flex-direction:column ;
+    font-size: 12px;
     align-items:center ;
     justify-content:center ;
 
 `
 const B = styled.div`
-  display:grid ;
-  grid-template-rows: repeat(2,1fr) ;
-    font-size: 10px;
+  display:flex ;
+  flex-direction:column ;
+    font-size: 12px;
     align-items:center ;
     justify-content:center ;
+    @media screen and (max-width:920px){
+      font-size:9px ;
+    }
 `
 const C = styled.div`
   display: flex ;
   align-items:center ;
   justify-content:center ;
-    font-size:12px ;
+    font-size:14px ;
 `
