@@ -120,7 +120,7 @@ const B = styled.div`
     align-self: flex-end;
     flex-wrap:nowrap ;
     width: calc(100vw/1.1409) ;
-    height:100% ;
+    height:80% ;
     overflow-x:scroll ;  
     @media screen and (min-width:800px){
         width: calc(100vw/1.7) ;

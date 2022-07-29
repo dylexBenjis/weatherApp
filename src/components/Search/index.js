@@ -145,7 +145,7 @@ const A = styled.div`
     height:25% ;
     @media screen and (max-width: 800px){
 
-        height: 30% ;
+        height: 60% ;
     }
 
 `

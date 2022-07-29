@@ -107,7 +107,7 @@ const First =styled.div`
     width: 65% ;
     height:100vh ;
     @media screen and (max-width: 920px){
-        height: 25% ;
+        height: 35% ;
         width:100vw ;
     }
 `
@@ -119,7 +119,7 @@ const Second =styled.div`
     height:100vh ;
 background-color: rgba(0,0,0,0.7) ;
 @media screen and (max-width: 920px){
-        height: 75% ;
+        height: 65% ;
         width:100vw ;
         background-color: transparent ;
     }
