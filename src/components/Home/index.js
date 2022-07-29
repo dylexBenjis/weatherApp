@@ -85,7 +85,7 @@ const LargeScreen=styled.div`
     display:flex ;
     flex-direction: row ;
     width:100% ;
-    height:100% ;
+    height:100vh ;
     @media screen and (max-width: 920px){
         display: none ;
     }
@@ -94,7 +94,7 @@ const SmallScreen=styled.div`
     display:none ;
     flex-direction: column;
     width:100% ;
-    height:100% ;
+    height:100vh ;
     @media screen and (max-width: 920px){
         display: flex ;
     }
@@ -107,7 +107,7 @@ const First =styled.div`
     width: 65% ;
     height:100vh ;
     @media screen and (max-width: 920px){
-        height: 35% ;
+        height: 30% ;
         width:100vw ;
     }
 `
@@ -119,7 +119,7 @@ const Second =styled.div`
     height:100vh ;
 background-color: rgba(0,0,0,0.7) ;
 @media screen and (max-width: 920px){
-        height: 65% ;
+        height: 70% ;
         width:100vw ;
         background-color: transparent ;
     }
@@ -139,7 +139,7 @@ const C =styled.div`
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 0px 0px 0px 0px;
-       height:calc(50vh*0.75) ;
+       height:calc(50vh*0.70) ;
     }
 `
 const D =styled.div`
@@ -147,7 +147,7 @@ const D =styled.div`
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 5px 0px 0px 0px;
-       height:calc(35vh*0.75) ;
+       height:calc(35vh*0.70) ;
     }
 `
 export const Hr =styled.div`
