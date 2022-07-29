@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 function App() {
   //getting my useSearch returned object
   const locationInfo = useSearch();
-  console.log(locationInfo.locationResult.location.address);
+  console.log(locationInfo.locationResult.location.values[0].datetime);
 
   const WeatherBackground = () =>{
     if (locationInfo.locationResult.location.values[0].icon === 'rain'||
@@ -23,19 +23,16 @@ function App() {
       return thunder
     }
     else{
-      if (locationInfo.locationResult.location.values[0].icon === 'partly-cloudy-day'||
-            locationInfo.locationResult.location.values[0].icon === 'clear-day'||
-            ((
-                (((dayjs(locationInfo.locationResult.location.values[0].datetime).format('h') >= '1')&&(dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')<='6'))
-                ||(dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')==='12'))
-                &&(dayjs(locationInfo.locationResult.location.values[0].datetime).format('A')==='PM')
-              )
-              ||(
-                  (dayjs(locationInfo.locationResult.location.values[0].datetime).format('A')==='AM')&&((dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')>='6')&&
-                  (dayjs(locationInfo.locationResult.location.values[0].datetime).format('h')<='11'))
-                )
-              )
-            )
+      if ((
+        (
+          (((dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('h') >= 1)&&(dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('h')<=6))||(dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('h')==='12'))
+          &&(dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('A')==='PM')
+        )
+        ||(
+            (dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('A')==='AM')&&((dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('h')>=6)&&
+            (dayjs(parseInt(`${locationInfo.locationResult.location.values[0].datetime}`)).format('h')<=11))
+          )
+        ))
           
       {
         return day
