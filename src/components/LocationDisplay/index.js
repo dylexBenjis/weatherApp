@@ -29,8 +29,8 @@ console.log(day)
                 <Date>{date} {dayjs(date).format('ddd')} {time} </Date>
             </City>
             <WeatherIcon>
-                <Icon ><Icons main={main} description={description} dayTime={dayTime} locationResult={locationResult} icon={icon}/></Icon>
-                <Description>{description}</Description>
+                <Icon ><Icons main={main} description={description} dayTime={dayTime} locationResult={locationResult} icon={icon} timee={dateResult.date_time_unix}/></Icon>
+                <Description >{description}</Description>
             </WeatherIcon>
             </div>
         </A>
