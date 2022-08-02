@@ -20,7 +20,7 @@ const Home = ({render, locationResult, dateResult}) => {
                     <LocWeatherDisplay temp={locationResult.currentConditions.temp} date={dateResult.date}
                     time={dateResult.time_12} locationResult={locationResult} dateResult={dateResult}
                     cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
-                    description={locationResult.currentConditions.}/>
+                    description={locationResult.currentConditions.icon}/>
                 </B>
             </Container>
         </First>
@@ -55,7 +55,7 @@ const Home = ({render, locationResult, dateResult}) => {
                     <LocWeatherDisplay locationResult={locationResult} temp={locationResult.currentConditions.temp} date={dateResult.date}
                         time={dateResult.time_12} dateResult={dateResult}
                         cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
-                        description={locationResult.currentConditions.}/>
+                        description={locationResult.currentConditions.icon}/>
                 </C>
             </Container>
         <div style={{backgroundColor:'rgba(0,0,0,0.5)'}}>
