@@ -10,53 +10,53 @@ const Details = ({clouds, windspeed,humidity, pressure, wdir}) => {
 console.log(wdir)
 
 function windDirection(wdir){
-    if (wdir>=10 && wdir>=350){
-        return ((wdir)+'° N')
+    if (wdir<=10 || wdir>=350){
+        return ((wdir)+'°N')
     }
     if (wdir>10 && wdir<40){
-        return (wdir+'° N/NE')
+        return (wdir+'°N/NE')
     }
     if (wdir>=40&&wdir<60){
-        return (wdir+'° NE')
+        return (wdir+'°NE')
     }
     if (wdir>=60&&wdir<80){
-        return (wdir+'° E/NE')
+        return (wdir+'°E/NE')
     }
     if (wdir>=80 && wdir<100){
-        return (wdir+'° E')
+        return (wdir+'°E')
     }
     if (wdir>=100&&wdir<130){
-        return ((wdir)+'° E/ES')
+        return ((wdir)+'°E/ES')
     }    
     if (wdir>=130&&wdir<150){
-        return ((wdir)+'° ES')
+        return ((wdir)+'°ES')
     }
     if (wdir>=150&&wdir<170){
-        return ((wdir)+'° S/ES')
+        return ((wdir)+'°S/ES')
     }
     if (wdir>=170&&wdir<190){
-        return ((wdir)+'° S')
+        return ((wdir)+'°S')
     }
     if (wdir>=190&&wdir<210){
-        return ((wdir)+'° S/SW')
+        return ((wdir)+'°S/SW')
     }
     if (wdir>=210&&wdir<230){
-        return ((wdir)+'° SW')
+        return ((wdir)+'°SW')
     }
     if (wdir>=230&&wdir<250){
-        return ((wdir)+'° W/SW')
+        return ((wdir)+'°W/SW')
     }
     if (wdir>=250&&wdir<280){
-        return ((wdir)+'° W')
+        return ((wdir)+'°W')
     }
     if (wdir>=280&&wdir<300){
-        return ((wdir)+'° W/WN')
+        return ((wdir)+'°W/WN')
     }
     if (wdir>=300&&wdir<320){
-        return ((wdir)+'° WN')
+        return ((wdir)+'°WN')
     }
     if (wdir>=320&&wdir<350){
-        return ((wdir)+'° N/WN')
+        return ((wdir)+'°N/WN')
     }
 }
   

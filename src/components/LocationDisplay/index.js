@@ -23,10 +23,10 @@ console.log(day)
     <LocContainer>
         <A>
             <Celsius id='cel'>{temp}&#176;C</Celsius>
-            <div style={{display:'flex', flexDirection:'row',gap:'25px'}}>
+            <div style={{display:'flex', flexDirection:'row', columnGap:'15px'}}>
             <City>
                 <Name > {cityName}</Name>
-                <Date>{dayjs(locationResult.values[0].datetime).format('DD/MM/YY ddd h:mm A')} </Date>
+                <Date>{date} {dayjs(date).format('ddd')} {time} </Date>
             </City>
             <WeatherIcon>
                 <Icon ><Icons main={main} description={description} dayTime={dayTime} locationResult={locationResult} icon={icon}/></Icon>
@@ -54,22 +54,21 @@ const LocContainer = styled.div`
     width:100% ; 
     color: white ;
     @media screen and (max-width:800px){
-        row-gap:15px ;
+        row-gap:0px ;
     }
 
 `
 const A =styled.div`
-    display:grid ;
+    display:flex ;
     width: 100% ;
     height:100% ;
-    grid-template-columns: auto ; 
-    grid-template-rows: auto auto ;
+    flex-direction:column ;
+    gap:5px ;
     justify-content: left ;
     align-self:flex-start ;
 `
 const Celsius =styled.div`
         display:flex ;
-        height:100% ;
         justify-self:left ;
         font-size:70px ;
         @media screen and (max-width: 800px){
@@ -117,13 +116,14 @@ const Description = styled.div`
 const B = styled.div`
     display: flex;
     justify-self:left ;
-    align-self: flex-end;
     flex-wrap:nowrap ;
     width: calc(100vw/1.1409) ;
-    height:80% ;
+    height:65% ;
     overflow-x:scroll ;  
     @media screen and (min-width:800px){
         width: calc(100vw/1.7) ;
+        height:80% ;
+        align-self: flex-end;
         &::-webkit-scrollbar{
             /* display:none ; */
             height: 17px ;

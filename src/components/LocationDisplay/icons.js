@@ -5,7 +5,9 @@ import dayjs from 'dayjs'
 
 const Icons = ({main,description, dayTime,icon,locationResult,timee}) => {
 
-
+  if(icon==='--'){
+    return '--'
+  }
     if ( icon=== 'clear-day'){
       if    ((dayjs(parseInt(`${timee}`)).format('A')==='PM')&&((dayjs(parseInt(`${timee}`)).format('h')>=7)&&
       (dayjs(parseInt(`${timee}`)).format('h')<=9))){ return <FaMoon/>}
@@ -16,7 +18,7 @@ const Icons = ({main,description, dayTime,icon,locationResult,timee}) => {
     if(icon==='clear-night'){
     if
     ((dayjs(parseInt(`${timee}`)).format('A')==='AM')&&
-    ((dayjs(parseInt(`${timee}`)).format('h')==='6'))) { return <FaSun/>}
+    ((dayjs(parseInt(`${timee}`)).format('h')>='6'))) { return <FaSun/>}
     else return <FaMoon/>}
 
     if (icon=== 'partly-cloudy-day'){
@@ -26,7 +28,7 @@ const Icons = ({main,description, dayTime,icon,locationResult,timee}) => {
     if(icon=== 'partly-cloudy-night'){
       if
       ((dayjs(parseInt(`${timee}`)).format('A')==='AM')&&
-      ((dayjs(parseInt(`${timee}`)).format('h')==='6'))) { return <FaCloudSun/>}
+      ((dayjs(parseInt(`${timee}`)).format('h')>='6'))) { return <FaCloudSun/>}
       else return <FaCloudMoon/> }
     
 

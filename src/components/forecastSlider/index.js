@@ -14,7 +14,7 @@ const ForecastSlider = ({cityName,temp,description,hour,
 
 
         return (
-        <ForecastCon key={element}>
+        <ForecastCon key={locationResult.values[element]}>
             <A>
               <div style={{justifySelf:'center', alignItems:'center' }}>
                 {dayjs(parseInt(`${element.datetime}`)).format('ddd')}
@@ -57,6 +57,7 @@ const A = styled.div`
   display:flex ;
   flex-direction:column ;
     font-size: 12px;
+    gap:3px;
     align-items:center ;
     justify-content:center ;
 

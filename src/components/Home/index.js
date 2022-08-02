@@ -17,10 +17,10 @@ const Home = ({render, locationResult, dateResult}) => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay temp={locationResult.values[0].temp} date={dateResult.date}
+                    <LocWeatherDisplay temp={locationResult.currentConditions.temp} date={dateResult.date}
                     time={dateResult.time_12} locationResult={locationResult} dateResult={dateResult}
-                    cityName={locationResult.address}   icon={locationResult.values[0].icon}
-                    description={locationResult.values[0].conditions}/>
+                    cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
+                    description={locationResult.currentConditions.}/>
                 </B>
             </Container>
         </First>
@@ -31,8 +31,8 @@ const Home = ({render, locationResult, dateResult}) => {
                 </C>
                 <Hr/>
                 <D>
-                    <Details clouds={locationResult.values[0].cloudcover} windspeed={locationResult.values[0].wspd} wdir={locationResult.values[0].wdir}
-                    humidity={locationResult.values[0].humidity} pressure={locationResult.values[0].sealevelpressure}/>
+                    <Details clouds={locationResult.currentConditions.cloudcover} windspeed={locationResult.currentConditions.wspd} wdir={locationResult.currentConditions.wdir}
+                    humidity={locationResult.currentConditions.humidity} pressure={locationResult.currentConditions.sealevelpressure}/>
                 </D>
                 <Hr/>
             </ContainerBlur>
@@ -52,17 +52,17 @@ const Home = ({render, locationResult, dateResult}) => {
         <Second>
             <Container>
                 <C>
-                    <LocWeatherDisplay locationResult={locationResult} temp={locationResult.values[0].temp} date={dateResult.date}
+                    <LocWeatherDisplay locationResult={locationResult} temp={locationResult.currentConditions.temp} date={dateResult.date}
                         time={dateResult.time_12} dateResult={dateResult}
-                        cityName={locationResult.address}   icon={locationResult.values[0].icon}
-                        description={locationResult.values[0].conditions}/>
+                        cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
+                        description={locationResult.currentConditions.}/>
                 </C>
             </Container>
         <div style={{backgroundColor:'rgba(0,0,0,0.5)'}}>
             <Container>
                 <D>
-                    <Details clouds={locationResult.values[0].cloudcover} windspeed={locationResult.values[0].wspd} wdir={locationResult.values[0].wdir}
-                        humidity={locationResult.values[0].humidity}   pressure={locationResult.values[0].sealevelpressure}/>
+                    <Details clouds={locationResult.currentConditions.cloudcover} windspeed={locationResult.currentConditions.wspd} wdir={locationResult.currentConditions.wdir}
+                        humidity={locationResult.currentConditions.humidity}   pressure={locationResult.currentConditions.sealevelpressure}/>
                 </D>
             </Container>
         </div>

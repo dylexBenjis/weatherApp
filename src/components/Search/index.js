@@ -38,29 +38,57 @@ const getLocation = () => {
         const getData = new XMLHttpRequest();
 
         getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName}&lang=en&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true)
-        getData.onload =  function(){
-        idd = JSON.parse(this.response);    
-        setLocationR(idd);
-        setLat(idd.location.latitude);
-        setLon(idd.location.longitude);
-        }  
+            
         getData.send();
-    }
+        getData.onerror= function(){
+            alert('check your internet connection');
+
+        }
+        getData.onload =  function(){
+
+            if (getData.status === 200 ){
+                try{
+                    idd = JSON.parse(this.response);    
+                    setLocationR(idd);
+                    setLat(idd.location.latitude);
+                    setLon(idd.location.longitude);
+                } 
+                catch{
+                    setLocationR(convert);
+                    alert('please, verify the location.');
+                }
+        }  
+
+    }}
     else{
         const getData = new XMLHttpRequest();
 
         getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName},${countryCode}&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true);
-    
-        getData.onload =  function(){
-        idd = JSON.parse(this.response);    
-        setLocationR(idd);
-        setLat(idd.city.coord.lat);
-        setLon(idd.city.coord.lon);
-        }  
         getData.send();
+        getData.onerror= function(){
+            alert('check your internet connection');
+
+        }
+
+        getData.onload =  function(){
+            console.log(this.response.errorCode)
+           if(getData.status === 200 ){
+               try{
+                    idd = JSON.parse(this.response);    
+                    setLocationR(idd);
+                    setLat(idd.location.latitude);
+                    setLon(idd.location.longitude);
+                } 
+                catch{
+                    setLocationR(convert);
+                    alert('please, verify the location.');
+                }
+            }
+            
+        }  
+
     }
 }
-
 
 // date Api
 useEffect(()=>{
@@ -73,9 +101,11 @@ useEffect(()=>{
     iddate = JSON.parse(this.response);    
     setDateR(iddate);
     }  
+
     getData.send();
 
 },[lat, lon])
+
 
 console.log(countryCode);
 console.log(locationResult);
