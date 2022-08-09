@@ -10,7 +10,7 @@ import Icons from './icons'
 
 const LocWeatherDisplay = ({cityName,temp,description, date, time,  locationResult, dateResult, icon}) => {
 
-
+console.log(locationResult)
   return (
     <LocContainer>
         <A>

@@ -25,7 +25,7 @@ function App() {
     else{
       if (
         (
-          (((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h') >= '1')&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<='6'))||((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')==='12'))
+          (((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h') >= 1)&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<=6))||((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')===12))
           &&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('A')==='PM'))
         )
         ||(

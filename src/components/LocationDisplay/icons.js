@@ -50,16 +50,16 @@ const Icons = ({icon,timee, time_display}) => {
 
   if (icon=== 'partly-cloudy-day'){
     if    ((dayjs(parseInt(`${timee}`)).format('A')==='PM')&&((dayjs(parseInt(`${timee}`)).format('h')>=7)&&
-    (dayjs(parseInt(`${timee}`)).format('h')<='9'))){ return <FaCloudMoon/>}
+    (dayjs(parseInt(`${timee}`)).format('h')<=9))){ return <FaCloudMoon/>}
     else if          (
-      (((dayjs(parseInt(`${timee}`)).format('h') >= '1')&&(dayjs(parseInt(`${timee}`)).format('h')<='6'))||(dayjs(parseInt(`${timee}`)).format('h')==='12'))
+      (((dayjs(parseInt(`${timee}`)).format('h') >= 1)&&(dayjs(parseInt(`${timee}`)).format('h')<=6))||(dayjs(parseInt(`${timee}`)).format('h')==='12'))
       &&(dayjs(parseInt(`${timee}`)).format('A')==='AM')
     ){ return <FaCloudMoon/>}
     else return <FaCloudSun/> }
   if(icon=== 'partly-cloudy-night'){
   if
   ((dayjs(parseInt(`${timee}`)).format('A')==='AM')&&
-  ((dayjs(parseInt(`${timee}`)).format('h')>='6'))) { return <FaCloudSun/>}
+  ((dayjs(parseInt(`${timee}`)).format('h')>=6))) { return <FaCloudSun/>}
   else return <FaCloudMoon/> }
   //for location component
   if (icon=== 'partly-cloudy-day'){
@@ -69,12 +69,12 @@ const Icons = ({icon,timee, time_display}) => {
       (((dayjs(parseInt(`${time_display}`)).format('h') >= '1')&&(dayjs(parseInt(`${time_display}`)).format('h')<='6'))||(dayjs(parseInt(`${time_display}`)).format('h')==='12'))
       &&(dayjs(parseInt(`${time_display}`)).format('A')==='AM')
     ){ return <FaCloudMoon/>}
-    else return <FaCloudSun/> }
+    else {return <FaCloudSun/>} }
   if(icon=== 'partly-cloudy-night'){
     if
     ((dayjs(parseInt(`${time_display}`)).format('A')==='AM')&&
-    ((dayjs(parseInt(`${time_display}`)).format('h')>=6))) { return <FaCloudSun/>}
-    else return <FaCloudMoon/> 
+    ((dayjs(parseInt(`${time_display}`)).format('h')>='6'))) { return <FaCloudSun/>}
+    else {return <FaCloudMoon/> }
   }
     
 
