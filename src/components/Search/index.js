@@ -1,15 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaSearch} from 'react-icons/fa'
 import styled from 'styled-components'
-import { Hr } from '../Home';
 import { convert } from './locationInfo';
 import './input.css'
 import { dateInfo } from './DateInfo';
 
-//for saved locations
-const savedLocations= [];
-var idd;
-var iddate;
+
+const savedLocations= [];//array to save city input
+var apiObject;//var to get api object
+var apiObjectDate;//var to get date api object
 
 const useSearch = () => {
 
@@ -21,15 +20,17 @@ const[lon, setLon] = useState(' ');
 
 const appid = 'YL3DPR3G8LL234DHWYMQP3223';//'a9a4272a867a0349a402486758b281ed';
 
-const [locationResult, setLocationR] = useState(convert);
+const [locationResult, setLocationResult] = useState(convert);
 const [dateResult, setDateR] = useState(dateInfo);
 
 const [countryCode, setCountryCode] = useState('');
 
 
 
-//set locationName to user input
+// method to call forecast API endpoint
 const getLocation = () => {
+
+    //set locationName to user input
     savedLoc();
 
 
@@ -48,13 +49,13 @@ const getLocation = () => {
 
             if (getData.status === 200 ){
                 try{
-                    idd = JSON.parse(this.response);    
-                    setLocationR(idd);
-                    setLat(idd.location.latitude);
-                    setLon(idd.location.longitude);
+                    apiObject = JSON.parse(this.response);    
+                    setLocationResult(apiObject);
+                    setLat(apiObject.location.latitude);
+                    setLon(apiObject.location.longitude);
                 } 
                 catch{
-                    setLocationR(convert);
+                    setLocationResult(convert);
                     alert('please, verify the location.');
                 }
         }  
@@ -74,13 +75,13 @@ const getLocation = () => {
             console.log(this.response.errorCode)
            if(getData.status === 200 ){
                try{
-                    idd = JSON.parse(this.response);    
-                    setLocationR(idd);
-                    setLat(idd.location.latitude);
-                    setLon(idd.location.longitude);
+                    apiObject = JSON.parse(this.response);    
+                    setLocationResult(apiObject);
+                    setLat(apiObject.location.latitude);
+                    setLon(apiObject.location.longitude);
                 } 
                 catch{
-                    setLocationR(convert);
+                    setLocationResult(convert);
                     alert('please, verify the location.');
                 }
             }
@@ -98,18 +99,15 @@ useEffect(()=>{
     getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&lat=${lat}&long=${lon}`, true);
 
     getData.onload =  function(){
-    iddate = JSON.parse(this.response);    
-    setDateR(iddate);
+    apiObjectDate = JSON.parse(this.response);    
+    setDateR(apiObjectDate);
     }  
 
     getData.send();
 
 },[lat, lon])
 
-
-console.log(countryCode);
-console.log(locationResult);
-console.log(locationName);
+console.log(dateResult)
 
 //save new location Name to array savedLocations; also bring up already city name to first line; limiting length to 5;
 const savedLoc=()=>{
@@ -123,7 +121,7 @@ const savedLoc=()=>{
   savedLocations.length = 5;
 }
 
-console.log(savedLocations)
+
 
   return {
     dateResult,

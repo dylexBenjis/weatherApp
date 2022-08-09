@@ -18,7 +18,7 @@ display:flex ;
     font-weight: bolder ;
     color: #fff;
     @media screen and (max-width:800px){
-        font-size: 30px ;
+        font-size: 22px ;
     }
 
 `

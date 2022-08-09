@@ -9,10 +9,10 @@ import useSearch from './components/Search';
 import dayjs from 'dayjs';
 
 function App() {
-  //getting my useSearch returned object
-  const locationInfo = useSearch();
-  console.log(dayjs.unix(locationInfo.dateResult.date_time_unix).format('h mm ss A'));
 
+  const locationInfo = useSearch();  //getting my useSearch returned object
+
+  //method for background Image display
   const WeatherBackground = () =>{
     if (locationInfo.locationResult.location.currentConditions.icon === 'rain'||
     locationInfo.locationResult.location.currentConditions.icon === 'showers-day'||
@@ -25,15 +25,14 @@ function App() {
     else{
       if (
         (
-          (((((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('h') >= 1)&&((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('h')<=6))||((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('h')==='12'))
-          &&((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('A')==='PM'))
+          (((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h') >= '1')&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<='6'))||((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')==='12'))
+          &&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('A')==='PM'))
         )
         ||(
-            ((((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('A')==='AM')&&((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('h')>=6))&&
-            ((dayjs.unix(locationInfo.dateResult.date_time_unix)).format('h')<=11))
+            ((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('A')==='AM')&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')>=6))&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<=11))
           )
         )
-          
+
       {
         return day
       }

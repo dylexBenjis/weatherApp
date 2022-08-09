@@ -1,11 +1,10 @@
-import dayjs from 'dayjs'
 import React from 'react'
 import styled from 'styled-components'
+import dayjs from 'dayjs'
 import Icons from '../LocationDisplay/icons'
 
 
-const ForecastSlider = ({cityName,temp,description,hour,
-                        minute, main, date, time, dayTime, locationResult, dateResult}) => {
+const ForecastSlider = ({ locationResult}) => {
 
   return (
     <Wrapper>
@@ -25,7 +24,7 @@ const ForecastSlider = ({cityName,temp,description,hour,
 
             </A>
             <B>
-               <div style={{fontSize:'16px',justifySelf:'center'}} > <Icons description={element.conditions} icon={element.icon} timee={element.datetime}/> </div> 
+               <div style={{fontSize:'16px',justifySelf:'center'}} > <Icons  icon={element.icon} timee={element.datetime}/> </div> 
                 <div style={{justifySelf:'center'}}>{element.conditions}</div>
 
             </B>

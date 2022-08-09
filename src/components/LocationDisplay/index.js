@@ -1,22 +1,14 @@
-import React, { useState } from 'react'
-
+import React from 'react'
 import styled from 'styled-components'
-import useSearch from '../Search'
 import dayjs from 'dayjs'
 import ForecastSlider from '../forecastSlider'
 import Icons from './icons'
-import { FaArrowLeft } from 'react-icons/fa'
 
 
 
 
 
-const LocWeatherDisplay = ({cityName,temp,description,hour,
-                            minute, main, date, time, dayTime, locationResult, dateResult, icon}) => {
-
-//for the day
-            const day = dayjs('2022-08-01').format('dd')
-console.log(day)
+const LocWeatherDisplay = ({cityName,temp,description, date, time,  locationResult, dateResult, icon}) => {
 
 
   return (
@@ -29,14 +21,13 @@ console.log(day)
                 <Date>{date} {dayjs(date).format('ddd')} {time} </Date>
             </City>
             <WeatherIcon>
-                <Icon ><Icons main={main} description={description} dayTime={dayTime} locationResult={locationResult} icon={icon} timee={dateResult.date_time_unix}/></Icon>
+                <Icon ><Icons  icon={icon} time_display={(dateResult.date_time_ymd).slice(0,19)}/></Icon>
                 <Description >{description}</Description>
             </WeatherIcon>
             </div>
         </A>
         <B>
-            <ForecastSlider locationResult={locationResult} dateResult={dateResult} cityName={cityName}temp={temp} description={description} hour = {hour} 
-            minute={minute} date={date} time={time} dayTime={dayTime} />
+            <ForecastSlider locationResult={locationResult} />
         </B>
 
     </LocContainer>
