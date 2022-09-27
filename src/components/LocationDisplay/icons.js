@@ -95,7 +95,7 @@ const Icons = ({icon,timee, time_display}) => {
           &&(dayjs(parseInt(`${timee}`)).format('A')==='PM')
         )
         ||(
-            (dayjs(parseInt(`${timee}`)).format('A')==='AM')&&((dayjs(parseInt(`${timee}`)).format('h')>=6))
+            (dayjs(parseInt(`${timee}`)).format('A')==='AM')&&((dayjs(parseInt(`${timee}`)).format('h')>=6)&&(dayjs(parseInt(`${timee}`)).format('h')<12))
           )
         )){
               return <FaCloudSunRain/>
