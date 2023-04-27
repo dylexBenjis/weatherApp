@@ -22,6 +22,7 @@ function App() {
     else if (locationInfo.locationResult.location.currentConditions.icon === 'thunder-rain'){
       return thunder
     }
+    else if(locationInfo.dateResult.date_time_ymd===''){ return  }
     else{
       if (
         (
@@ -39,7 +40,7 @@ function App() {
       else{
         return night
       }
-    }
+    } 
 
   }
 
