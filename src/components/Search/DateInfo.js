@@ -14,5 +14,9 @@ export const dateInfo = {
     year: "2020",
     year_abbr: "20",
     is_dst: false,
-    dst_savings: 0
+    dst_savings: 0,
+    geo:{
+        city:'',
+        country_name:''
+    }
 }

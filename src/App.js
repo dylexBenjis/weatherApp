@@ -24,16 +24,7 @@ function App() {
     }
     else if(locationInfo.dateResult.date_time_ymd===''){ return  }
     else{
-      if (
-        (
-          (((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h') >= 1)&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<=6))||((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')===12))
-          &&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('A')==='PM'))
-        )
-        ||(
-            ((((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('A')==='AM')&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')>=6))&&((dayjs(((locationInfo.dateResult.date_time_ymd).slice(0,19)))).format('h')<=11))
-          )
-        )
-
+      if ((locationInfo.dateResult.date_time_ymd).slice(11,13)>=6&&(locationInfo.dateResult.date_time_ymd).slice(11,13)<=18)
       {
         return day
       }
@@ -44,18 +35,38 @@ function App() {
 
   }
 
-
+console.log(locationInfo.loader,(locationInfo.dateResult.date_time_ymd).slice(11,12))
   return (
     <div className="App">
+      <Loader load={locationInfo.loader}>
+        Loading...
+      </Loader>
       <BackgroundImage>
         <Img src={WeatherBackground()}></Img>
       </BackgroundImage>
       <Home locationResult={locationInfo.locationResult.location} dateResult={locationInfo.dateResult} render={locationInfo.render}/>
     </div>
   );
-}
+  }
 
 export default App;
+
+const Loader= styled.div`
+position: fixed;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+display: flex ;
+justify-content:center;
+align-self:center;
+background-color:rgba(30,30,30, 0.3);
+color:white;
+opacity:${({load})=>(load?1:0)};
+z-index:${({load})=>(load?1:-1)};
+`
 
 const BackgroundImage= styled.div`
 position: fixed;

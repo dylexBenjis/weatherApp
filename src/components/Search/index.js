@@ -12,105 +12,137 @@ var apiObjectDate;//var to get date api object
 
 const useSearch = () => {
 
-    
-
-const[locationName, setLocationName] = useState();
-const[lat, setLat] = useState(' ');
-const[lon, setLon] = useState(' ');
-
-const appid = 'YL3DPR3G8LL234DHWYMQP3223';//'a9a4272a867a0349a402486758b281ed';
-
-const [locationResult, setLocationResult] = useState(convert);
-const [dateResult, setDateR] = useState(dateInfo);
-
-const [countryCode, setCountryCode] = useState('');
+    const[locationName, setLocationName] = useState();
+    const[lat, setLat] = useState('');
+    const[lon, setLon] = useState('');
+    const[getApi,setGetApi] = useState(false)
 
 
+    const[loader, setLoader] = useState(false); //for loading animation component when user click search icon
 
-// method to call forecast API endpoint
-const getLocation = () => {
+    const appid = 'YL3DPR3G8LL234DHWYMQP3223';//'a9a4272a867a0349a402486758b281ed';
 
-    //set locationName to user input
-    savedLoc();
+    const [locationResult, setLocationResult] = useState(convert);
+    const [dateResult, setDateR] = useState(dateInfo);
+
+    const [countryCode, setCountryCode] = useState('');
 
 
-    //get json file
-    if(countryCode === ''){
+
+
+
+
+    // date Api
+        useEffect( () => {
         const getData = new XMLHttpRequest();
 
-        getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName}&lang=en&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true)
-            
+        getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6`);
         getData.send();
-        getData.onerror= function(){
-            alert('check your internet connection');
-
-        }
-        getData.onload =  function(){
-
-            if (getData.status === 200 ){
-                try{
-                    apiObject = JSON.parse(this.response);    
-                    setLocationResult(apiObject);
-                    setLat(apiObject.location.latitude);
-                    setLon(apiObject.location.longitude);
-                } 
-                catch{
-                    setLocationResult(convert);
-                    alert('please, verify the location.');
-                }
+        getData.onloadend =  ()=>{
+        apiObjectDate = JSON.parse(getData.response); 
+        console.log(apiObjectDate); 
+        setDateR(apiObjectDate);
+        setGetApi(true);
         }  
+        },[])
 
-    }}
-    else{
+        //user onclick search icon, update locationResult.location.tz to get new location time theerefore updating dateResult
+        useEffect(()=>{
         const getData = new XMLHttpRequest();
 
-        getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName},${countryCode}&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`, true);
+        getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&tz=${locationResult.location.tz}`);
         getData.send();
-        getData.onerror= function(){
-            alert('check your internet connection');
+        getData.onloadend =  ()=>{
+        apiObjectDate = JSON.parse(getData.response); 
+        setDateR(apiObjectDate);
+        }},[locationResult.location.tz])
+            console.log(lat,lon,getApi);
 
-        }
+        console.log(apiObjectDate); 
+    //
 
-        getData.onload =  function(){
-            console.log(this.response.errorCode)
-           if(getData.status === 200 ){
-               try{
-                    apiObject = JSON.parse(this.response);    
-                    setLocationResult(apiObject);
-                    setLat(apiObject.location.latitude);
-                    setLon(apiObject.location.longitude);
-                } 
-                catch{
-                    setLocationResult(convert);
-                    alert('please, verify the location.');
-                }
+    //initial get weather api call, uses ipgeolocation result (city and country_name)
+        useEffect(()=>{
+
+        if(getApi){
+        const getData = new XMLHttpRequest();
+
+        getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${dateResult.geo.city},${dateResult.geo.country_name}&lang=en&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`);
+        getData.send();
+        getData.onloadend =  ()=>{
+        apiObject = JSON.parse(getData.response);   
+        setLocationResult(apiObject);
+        }  }
+        },[getApi])
+    //
+
+    // method to call forecast API endpoint if user click search icon
+    const getLocation = () => {
+
+        //set locationName to user input
+        savedLoc();
+        setLoader(true);
+        //get json file
+        if(countryCode === ''){
+            const getData = new XMLHttpRequest();
+
+            getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName}&lang=en&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`)
+                
+            getData.send();
+            getData.onerror= function(){
+                alert('check your internet connection');
+
             }
-            
-        }  
+            getData.onloadend =  function(){
+                setLoader(false)
+                if(getData.status === 200 ){
+                    apiObject = JSON.parse(this.response);
+                    if(apiObject.errorCode!==999){
+                        setLocationResult(apiObject);
+                        setLat(apiObject.location.latitude);
+                        setLon(apiObject.location.longitude);  
+                        // getIPgeolocation();
+                    }
+                    else if(apiObject.errorCode===999){
+                        alert('please, verify the location.'); 
+                    }
 
+                }    
+            }
+        }
+        else{
+            const getData = new XMLHttpRequest();
+
+            getData.open('GET', `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?locationMode=single&locations=${locationName},${countryCode}&aggregateHours=1&unitGroup=metric&shortColumnNames=false&contentType=json&forecastDays=1&key=${appid}&iconSet=icons1`);
+            getData.send();
+            getData.onerror= function(){
+                alert('check your internet connection');
+
+            }
+
+            getData.onloadend =  function(){
+                setLoader(false)
+                if(getData.status === 200 ){
+                    apiObject = JSON.parse(this.response);
+                    if(apiObject.errorCode!==999){
+                        setLocationResult(apiObject);
+                        setLat(apiObject.location.latitude);
+                        setLon(apiObject.location.longitude);  
+                        // getIPgeolocation();
+                    }
+                    else if(apiObject.errorCode===999){
+                        alert('please, verify the location.'); 
+                    }
+
+                }    
+            }  
+
+        }
     }
-}
+    //
 
-// date Api
-useEffect(()=>{
-
-    const getData = new XMLHttpRequest();
-
-    getData.open('GET', `https://api.ipgeolocation.io/timezone?apiKey=3e4a456b11e143b181561af5cbb77bc6&lat=${lat}&long=${lon}`, true);
-
-    getData.onload =  function(){
-    apiObjectDate = JSON.parse(this.response);    
-    setDateR(apiObjectDate);
-    }  
-
-    getData.send();
-
-},[lat, lon])
-
-console.log(dateResult)
-
-//save new location Name to array savedLocations; also bring up already city name to first line; limiting length to 5;
-const savedLoc=()=>{
+    //save new location Name to array savedLocations; also bring up already city name to first line; limiting length to 5;
+    const savedLoc=()=>{
     if (savedLocations.includes(locationName)){
         delete savedLocations[savedLocations.indexOf(locationName)];
         savedLocations.unshift(locationName);
@@ -118,42 +150,43 @@ const savedLoc=()=>{
     else{
         savedLocations.unshift(locationName);
     }
-  savedLocations.length = 5;
-}
+    savedLocations.length = 5;
+    }
 
+    console.log(dateResult)
 
-
-  return {
-    dateResult,
-    locationName,
-    locationResult,
-    render: (
-    <SearchContainer>
-        <A>
-            <First>
-                <SearchInput >
-                    <Input onChange={e=>setLocationName(e.target.value)}  id='locatioN' type='text' placeholder='City'/> 
-                    <Input  onChange={e=>setCountryCode(e.target.value)}  id='countrycode' type='text' placeholder='Country'/> 
-                </SearchInput>
-                <Button onClick={getLocation}><FaSearch/></Button>
-            </First>
-            <Note>
-            <span style={{color:'red'}}>note: </span>input country for accurate information.
-            </Note>
-        </A>
-        <B>
-            {/*array of saved locations */}
-            {savedLocations.map((index)=>{
-                return (
-                    <CityNames key={index} onClick={()=>{  getLocation(); setLocationName(index);    savedLoc();}}>
-                        {index}
-                    </CityNames>
-                )
-                })
-            }
-        </B>
-    </SearchContainer>
-    )
+    return {
+        dateResult,
+        locationName,
+        locationResult,
+        loader,
+        render: (
+        <SearchContainer>
+            <A>
+                <First>
+                    <SearchInput >
+                        <Input onChange={e=>setLocationName(e.target.value)}  id='locatioN' type='text' placeholder='City'/> 
+                        <Input  onChange={e=>setCountryCode(e.target.value)}  id='countrycode' type='text' placeholder='Country'/> 
+                    </SearchInput>
+                    <Button onClick={getLocation}><FaSearch/></Button>
+                </First>
+                <Note>
+                <span style={{color:'red'}}>note: </span>input country for accurate information.
+                </Note>
+            </A>
+            <B>
+                {/*array of saved locations */}
+                {savedLocations.map((index)=>{
+                    return (
+                        <CityNames key={index} onClick={()=>{  getLocation(); setLocationName(index);    savedLoc();}}>
+                            {index}
+                        </CityNames>
+                    )
+                    })
+                }
+            </B>
+        </SearchContainer>
+        )
     }
 }
 
@@ -172,15 +205,12 @@ const A = styled.div`
     width:100% ;
     height:25% ;
     @media screen and (max-width: 800px){
-
         height: 70% ;
     }
-
 `
 const First = styled.div`
     display: grid ;
     grid-template-columns: 85% 15% ;
-
 `
 const SearchInput = styled.div`
     display:flex;
@@ -213,7 +243,6 @@ const Button = styled.div`
 const Note = styled.div`
     color: gray ;
     font-size: 12px ;
-
 `
 const B = styled.div`
     display: flex ;

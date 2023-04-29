@@ -8,17 +8,17 @@ import Icons from './icons'
 
 
 
-const LocWeatherDisplay = ({cityName,temp,description, date, time,  locationResult, dateResult, icon}) => {
+const LocWeatherDisplay = ({cityName,temp,description, datetime,  locationResult, dateResult, icon}) => {
 
-console.log(locationResult)
+console.log(locationResult,datetime)
   return (
     <LocContainer>
         <A>
             <Celsius id='cel'>{temp}&#176;C</Celsius>
-            <div style={{display:'flex', flexDirection:'row', columnGap:'15px'}}>
+            <div style={{display:'flex', flexDirection:'row', columnGap:'25px'}}>
             <City>
                 <Name > {cityName}</Name>
-                <Date>{date} {dayjs(date).format('ddd')} {time} </Date>
+                <Date>{(dateResult.date_time_ymd).slice(0,10)} {dayjs(dateResult.date_time_ymd).format('ddd')} {(dateResult.date_time_ymd).slice(11,19)}{dayjs(dateResult.date_time_ymd).format('A')} </Date>
             </City>
             <WeatherIcon>
                 <Icon ><Icons  icon={icon} time_display={(dateResult.date_time_ymd).slice(0,19)}/></Icon>
@@ -45,7 +45,7 @@ const LocContainer = styled.div`
     width:100% ; 
     color: white ;
     @media screen and (max-width:800px){
-        row-gap:0px ;
+        row-gap:15px ;
     }
 
 `
@@ -54,9 +54,10 @@ const A =styled.div`
     width: 100% ;
     height:100% ;
     flex-direction:column ;
-    gap:5px ;
+    gap:10px ;
     justify-content: left ;
-    align-self:flex-start ;
+    align-self:flex-start ;  
+
 `
 const Celsius =styled.div`
         display:flex ;
@@ -70,7 +71,10 @@ const City =styled.div`
     display: flex ;
     flex-direction:column ;
     justify-self:left ;
-
+    row-gap:15px;
+    @media screen and (max-width: 800px){
+        gap:5px;
+    }
     
 `
 const Name =styled.div`
@@ -88,6 +92,10 @@ const Date =styled.div`
 const WeatherIcon =styled.div`
     display: flex ; 
     flex-direction:column ; 
+    row-gap:10px;
+    @media screen and (max-width: 800px){
+        gap:5px;
+    }
 
 `
 const Icon= styled.div`
@@ -108,12 +116,11 @@ const B = styled.div`
     display: flex;
     justify-self:left ;
     flex-wrap:nowrap ;
-    width: calc(100vw/1.1409) ;
-    height:65% ;
+    width: 100% ;
+    height:80% ;
     overflow-x:scroll ;  
     @media screen and (min-width:800px){
-        width: calc(100vw/1.7) ;
-        height:80% ;
+
         align-self: flex-end;
         &::-webkit-scrollbar{
             /* display:none ; */

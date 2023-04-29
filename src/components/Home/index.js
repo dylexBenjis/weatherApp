@@ -17,8 +17,7 @@ const Home = ({render, locationResult, dateResult}) => {
                     <Nav/>
                 </A>
                 <B>
-                    <LocWeatherDisplay temp={locationResult.currentConditions.temp} date={dateResult.date}
-                    time={dateResult.time_12} locationResult={locationResult} dateResult={dateResult}
+                    <LocWeatherDisplay temp={locationResult.currentConditions.temp} locationResult={locationResult} dateResult={dateResult}
                     cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
                     description={locationResult.currentConditions.icon}/>
                 </B>
@@ -40,7 +39,7 @@ const Home = ({render, locationResult, dateResult}) => {
         </LargeScreen>
         <SmallScreen>
         <First>
-            <Container>
+            <Container style={{marginTop:'20px'}}>
                 <A>
                     <Nav/>
                 </A>
@@ -51,9 +50,8 @@ const Home = ({render, locationResult, dateResult}) => {
         </First>
         <Second>
             <Container>
-                <C>
-                    <LocWeatherDisplay locationResult={locationResult} temp={locationResult.currentConditions.temp} date={dateResult.date}
-                        time={dateResult.time_12} dateResult={dateResult}
+                <C >
+                    <LocWeatherDisplay locationResult={locationResult} temp={locationResult.currentConditions.temp} dateResult={dateResult}
                         cityName={locationResult.address}   icon={locationResult.currentConditions.icon}
                         description={locationResult.currentConditions.icon}/>
                 </C>
@@ -139,7 +137,7 @@ const C =styled.div`
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 0px 0px 0px 0px;
-       height:calc(50vh*0.70) ;
+       height:100% ;
     }
 `
 const D =styled.div`
@@ -147,7 +145,7 @@ const D =styled.div`
     height:45vh ;
     @media screen and (max-width: 800px){
        padding: 5px 0px 0px 0px;
-       height:calc(35vh*0.70) ;
+       height:100% ;
     }
 `
 export const Hr =styled.div`
